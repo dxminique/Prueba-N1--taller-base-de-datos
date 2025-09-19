@@ -1,3 +1,5 @@
+--antes del package
+
 --- funcion para calcular total del pedido
 
 CREATE OR REPLACE FUNCTION calcular_total_pedido(p_id_pedido NUMBER)

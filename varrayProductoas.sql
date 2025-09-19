@@ -81,7 +81,7 @@ BEGIN
     RETURN;
   END IF;
 
-  -- 3) Recorrer el VARRAY y, para cada pedido, usar el cursor con parámetro
+
   FOR i IN 1 .. v_peds.COUNT LOOP
     v_total := 0;
     DBMS_OUTPUT.PUT_LINE('--- Pedido '||v_peds(i)||' ---');
@@ -99,11 +99,22 @@ EXCEPTION
 END;
 /
 
-
+DECLARE
+  v_pedido NUMBER;
 BEGIN
-  pkg_pedidos.agregar_linea(21, 13, 2);  
+  INSERT INTO PEDIDO (ID_USUARIO)
+  VALUES ((SELECT MIN(ID_USUARIO) FROM USUARIO))
+  RETURNING ID_PEDIDO INTO v_pedido;
+
+  pkg_pedidos.agregar_linea(v_pedido, 13, 2); --pedido, producto, cantidad
 END;
 /
+
+
+
+--para verificar pedidos ya existentes
+SELECT ID_PEDIDO, ID_USUARIO, TOTAL FROM PEDIDO ORDER BY ID_PEDIDO;
+
 
 
 
